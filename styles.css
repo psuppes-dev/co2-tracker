@@ -1,0 +1,222 @@
+body {
+    background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), 
+                url('co2background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+
+main {
+    flex: 1; /* Füllt den verfügbaren Platz zwischen Header und Footer */
+    text-align: center;
+    padding: 1rem;
+}
+
+label {
+    margin-right: 1rem;
+}
+
+select, button {
+    padding: 0.5rem;
+    margin: 1rem 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 0.8rem;
+    text-align: left;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: #f4f4f4; /* Hellgrau für ungerade Zeilen */
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #ffffff; /* Weiß für gerade Zeilen */
+}
+
+table th {
+    background-color: #2ecc71; /* Grün für die Kopfzeile */
+    color: white;
+    padding: 1rem;
+    text-align: left;
+}
+
+table td {
+    padding: 1rem;
+}
+
+#logo {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+/* Standard: LTR */
+body.ltr-direction {
+    direction: ltr;
+    text-align: left;
+}
+
+/* RTL-Stil */
+body.rtl-direction {
+    direction: rtl;
+    text-align: right;
+}
+
+html, body {
+    height: 100%; /* Stellt sicher, dass der gesamte Bildschirm genutzt wird */
+    margin: 0;
+}
+
+body.datenschutz-page {
+    background: none; /* Kein Hintergrundbild */
+    background-color: #ffffff; /* Weißer Hintergrund */
+}
+
+
+
+#toggle-direction {
+    position: absolute;
+    top: 2.6rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#toggle-direction:hover {
+    background-color: #27ae60;
+}
+
+@media (max-width: 1024px) {
+    body {
+        background: none; /* Entfernt das Hintergrundbild */
+    }
+}
+
+/* Sidebar Styling */
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px; /* Standard: Sidebar startet links außerhalb des sichtbaren Bereichs */
+    width: 250px;
+    height: 100%;
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease; /* Animiertes Ein-/Ausblenden und Positionswechsel */
+    z-index: 1000;
+}
+
+#sidebar.open {
+    left: 0; /* Standard: Sidebar gleitet von links herein */
+}
+
+#sidebar #close-sidebar {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px; /* Standard: "X" rechts in der Sidebar */
+    transition: all 0.3s ease;
+}
+
+#open-sidebar {
+    position: fixed;
+    top: 10px;
+    left: 10px; /* Standard: Burger-Button links */
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 999;
+    transition: all 0.3s ease;
+}
+
+/* Links in der Sidebar */
+#sidebar a {
+    color: white; /* Links weiß */
+    text-decoration: none; /* Entfernt die Unterstreichung */
+}
+
+#sidebar a:visited {
+    color: white; /* Verhindert, dass besuchte Links lila erscheinen */
+}
+
+/* RTL-Ausrichtung */
+body.rtl-direction #sidebar {
+    right: -280px; /* Sidebar startet rechts außerhalb des sichtbaren Bereichs */
+    left: auto; /* Sicherstellen, dass die linke Seite nicht beeinflusst wird */
+}
+
+body.rtl-direction #sidebar.open {
+    right: 0; /* Sidebar gleitet von rechts herein */
+    left: auto;
+}
+
+body.rtl-direction #sidebar #close-sidebar {
+    left: 10px; /* "X" links in der Sidebar */
+    right: auto;
+}
+
+body.rtl-direction #open-sidebar {
+    right: 10px; /* Burger-Button rechts */
+    left: auto;
+}
+
+h1 {
+    font-size: 2.5rem; /* Schriftgröße */
+    font-weight: bold; /* Fett */
+    color: #000000; /* Schriftfarbe */
+    text-align: center; /* Zentrierung */
+}
+
+/* Menü nur auf Mobile und Tablets anzeigen */
+#open-sidebar, #sidebar {
+    display: none; /* Standardmäßig versteckt */
+}
+
+@media (max-width: 1024px) {
+    #open-sidebar, #sidebar {
+        display: block; /* Zeigt das Menü auf Tablets und Mobile */
+    }
+}
+
+@media (max-width: 1024px) {
+    header {
+        display: none; /* Versteckt den Header auf Geräten mit einer Breite von 1024px oder weniger */
+    }
+}
+
+
+.chart-section {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+#totalEmissionsChart {
+    max-height: 300px !important;
+}

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta http-equiv="Content-Security-Policy" 
+      content="
+        default-src 'self'; 
+        script-src 'self' https://cdn.jsdelivr.net; 
+        style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; 
+        img-src 'self'; 
+        object-src 'none'; 
+        frame-ancestors 'none';">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CO2 Emissions Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg" style="background-color: #333;">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                        <div class="col-4 d-flex justify-content-start">
+                            <a class="nav-link text-white ms-5" href="#home">
+                                <img src="home-icon.png" alt="Home Icon" style="width: 20px; height: 20px; margin-right: 5px; position: relative; top: 1px;"> 
+                                Home
+                            </a>
+                        </div>
+                        <div class="col-4 d-flex justify-content-center">
+                            <a class="nav-link text-white" href="#about">
+                                <img src="about-icon.png" alt="About Icon" style="width: 20px; height: 20px; margin-right: 5px; position: relative; top: 1px;"> 
+                                Über uns
+                            </a>
+                        </div>
+                        <div class="col-4 d-flex justify-content-end">
+                            <a class="nav-link text-white me-5" href="#contact">
+                                <img src="contact-icon.png" alt="Contact Icon" style="width: 20px; height: 20px; margin-right: 5px; position: relative; top: 1px;"> 
+                                Kontakt
+                            </a>
+                        </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <button id="close-sidebar">×</button>
+        <nav>
+            <ul>
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">Über uns</a></li>
+                <li><a href="index.html#contact">Kontakt</a></li>
+            </ul>
+        </nav>
+    </div>
+    <button id="open-sidebar">☰</button>
+
+    <!-- Logo -->
+    <div id="logo">
+        <img src="CO2-image.png" alt="CO2 Logo" style="width: 200px; height: auto;">
+    </div>
+
+    <main>
+        <button id="toggle-direction" class="btn btn-primary">Umschalten: RTL/LTR</button>
+        <!-- Home -->
+        <section id="home">
+            <h1>Willkommen auf der CO2-Tracker-Seite</h1>
+            <p><strong>Hier kannst du CO2-Emissionen nach Ländern und Unternehmen analysieren.</strong></p>
+            
+            <!-- Filter-Optionen -->
+            <label for="filter-country"><strong>Filter nach Land:</strong></label>
+<select id="filter-country">
+    <option value="">Alle Länder</option>
+    <option value="Deutschland">Deutschland</option>
+    <option value="USA">USA</option>
+    <option value="China">China</option>
+</select>
+
+
+<label for="filter-company"><strong>Filter nach Unternehmen:</strong></label>
+<select id="filter-company">
+    <option value="">Alle Unternehmen</option>
+
+    <!-- Deutschland -->
+    <option value="RWE">RWE</option>
+    <option value="Volkswagen AG">Volkswagen AG</option>
+    <option value="BASF">BASF</option>
+    <option value="Daimler (Mercedes-Benz)">Daimler (Mercedes-Benz)</option>
+    <option value="E.ON">E.ON</option>
+
+    <!-- USA -->
+    <option value="ExxonMobil">ExxonMobil</option>
+    <option value="Chevron">Chevron</option>
+    <option value="General Electric (GE)">General Electric (GE)</option>
+    <option value="Ford Motor Company">Ford Motor Company</option>
+    <option value="American Airlines">American Airlines</option>
+
+    <!-- China -->
+    <option value="China Energy Investment">China Energy Investment</option>
+    <option value="PetroChina">PetroChina</option>
+    <option value="China National Petroleum Corporation">China National Petroleum Corporation</option>
+    <option value="Sinopec">Sinopec</option>
+    <option value="State Grid Corporation">State Grid Corporation</option>
+</select>
+
+
+<label for="sort-order"><strong>Sortieren nach CO2-Emissionen:</strong></label>
+<select id="sort-order">
+    <option value="asc">Aufsteigend</option>
+    <option value="desc">Absteigend</option>
+</select>
+
+
+
+            <!-- Tabelle -->
+            <table id="co2-table">
+                <thead>
+                    <tr>
+                        <th>Land</th>
+                        <th>Unternehmen</th>
+                        <th>CO2 Emissionen (t)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Deutschland -->
+                    <tr><td>Deutschland</td><td>RWE</td><td>200</td></tr>
+                    <tr><td>Deutschland</td><td>Volkswagen AG</td><td>180</td></tr>
+                    <tr><td>Deutschland</td><td>BASF</td><td>160</td></tr>
+                    <tr><td>Deutschland</td><td>Daimler (Mercedes-Benz)</td><td>140</td></tr>
+                    <tr><td>Deutschland</td><td>E.ON</td><td>120</td></tr>
+                
+                    <!-- USA -->
+                    <tr><td>USA</td><td>ExxonMobil</td><td>400</td></tr>
+                    <tr><td>USA</td><td>Chevron</td><td>350</td></tr>
+                    <tr><td>USA</td><td>General Electric (GE)</td><td>300</td></tr>
+                    <tr><td>USA</td><td>Ford Motor Company</td><td>280</td></tr>
+                    <tr><td>USA</td><td>American Airlines</td><td>260</td></tr>
+                
+                    <!-- China -->
+                    <tr><td>China</td><td>China Energy Investment</td><td>500</td></tr>
+                    <tr><td>China</td><td>PetroChina</td><td>450</td></tr>
+                    <tr><td>China</td><td>China National Petroleum Corporation</td><td>420</td></tr>
+                    <tr><td>China</td><td>Sinopec</td><td>400</td></tr>
+                    <tr><td>China</td><td>State Grid Corporation</td><td>380</td></tr>
+                </tbody>                
+            </table>
+            
+            <!-- Gesamtemissionen Chart -->
+            <div style="width: 90%; margin: 20px auto;">
+                <div class="chart-section">
+                    <h2 style="font-size: 1.5rem; font-weight: bold; margin: 20px 0;">CO2-Emissionen nach Ländern</h2>
+                    <canvas id="totalEmissionsChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Über uns -->
+        <section id="about" style="display: none;">
+            <h1>Über uns</h1>
+            <p><strong>Wir sind eine Non-Profit-Organisation, die Transparenz in CO2-Emissionen schafft.</strong></p>
+        </section>
+
+        <!-- Kontakt -->
+        <section id="contact" style="display: none;">
+            <h1>Kontakt</h1>
+            <p><strong>Schreib uns gerne: info@co2tracker.org</strong></p>
+            <p><strong>Rufen Sie uns an: +49 123 456789</strong></p>
+        </section>
+    </main>
+
+    <footer class="text-white" style="background-color: #333; padding: 1.5rem 0;">
+        <div class="container">
+            <div class="d-flex justify-content-between">
+                <!-- Rechtliches -->
+                <div>
+                    <h5>Rechtliches</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="datenschutz.html" class="text-decoration-none text-white">Datenschutz</a></li>
+                        <li><a href="impressum.html" class="text-decoration-none text-white">Impressum</a></li>
+                    </ul>
+                </div>
+    
+                <!-- Kontakt -->
+                <div class="text-end">
+                    <h5>Kontakt</h5>
+                    <p>Email: <a href="mailto:info@co2tracker.org" class="text-decoration-none text-white">info@co2tracker.org</a></p>
+                    <p>Telefon: <a href="tel:+49123456789" class="text-decoration-none text-white">+49 123 456789</a></p>
+                </div>
+            </div>
+    
+            <!-- Footer-Bottom -->
+            <div class="text-center mt-3 border-top pt-3">
+                <p class="mb-0">&copy; 2024 CO2 Emissions Tracker | Alle Rechte vorbehalten</p>
+            </div>
+        </div>
+    </footer>
+    
+
+    <script src="script.js"></script>
+    <script src="chart.js"></script>
+</body>
+</html>
